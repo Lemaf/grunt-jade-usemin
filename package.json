@@ -1,6 +1,6 @@
 {
   "name": "grunt-pug-usemin",
-  "version": "2.1.0",
+  "version": "0.0.1",
   "description": "Grunt plugin for running usemin on Pug files",
   "repository": "pgilad/grunt-pug-usemin",
   "license": "MIT",
