@@ -5,9 +5,8 @@
   "repository": "Lemaf/grunt-pug-usemin",
   "license": "MIT",
   "author": {
-    "name": "Gilad Peleg",
-    "email": "giladp007@gmail.com",
-    "url": "http://giladpeleg.com"
+    "name": "Diego Nogueira Teixeira",
+    "url": "https://github.com/teixeiradiego"
   },
   "files": [
     "tasks"
@@ -50,8 +49,9 @@
       "url": "https://github.com/ppitonak"
     },
     {
-      "name": "Diego Nogueira Teixeira",
-      "url": "https://github.com/teixeiradiego"
+      "name": "Gilad Peleg",
+      "email": "giladp007@gmail.com",
+      "url": "http://giladpeleg.com"
     }
   ]
 }
