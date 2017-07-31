@@ -12,7 +12,7 @@ var os = require('os');
 var path = require('path');
 var slash = require('slash');
 
-var allowedExtnames = ['.jade', '.pug'];
+var allowedExtnames = ['.pug', '.pug'];
 
 function hasSrcResult(result) {
     if (!Array.isArray(result)) {
@@ -111,13 +111,13 @@ exports.task = function (grunt) {
         var taskOptions = {};
         //get task options (if exists)
         taskOptions.global = grunt.config(task + '.options') || {};
-        //get task:jadeUsemin options (if exists)
-        taskOptions.options = grunt.config(task + '.jadeUsemin.options') || {};
+        //get task:pugUsemin options (if exists)
+        taskOptions.options = grunt.config(task + '.pugUsemin.options') || {};
         //get default options for task
         taskOptions.defaults = defaultTasks[task] && defaultTasks[task].options || {};
-        //merge ==> task:jadeUsemin.options > task.options > default.options
+        //merge ==> task:pugUsemin.options > task.options > default.options
         var opts = assign({}, taskOptions.defaults, taskOptions.global, taskOptions.options);
-        //build jadeUsemin target for this task
+        //build pugUsemin target for this task
         return {
             files: [],
             options: opts
@@ -125,33 +125,33 @@ exports.task = function (grunt) {
     };
 
     var iterateFiles = function (files, options) {
-        var jadeSrc;
+        var pugSrc;
         var extractedTargets = {};
         //iterate through each file object
         forEach(files, function (file) {
-            //reset jade src
-            jadeSrc = '';
+            //reset pug src
+            pugSrc = '';
             //handle file src
             forEach(file.src, function (src) {
-                grunt.log.writeln('Processing jade file', src);
-                //skip non-jade files (could be re-written)
+                grunt.log.writeln('Processing pug file', src);
+                //skip non-pug files (could be re-written)
                 if (allowedExtnames.indexOf(path.extname(src)) < 0) {
                     return grunt.log.warn('Not processing %s because of unsupported extension: %s', src);
                 }
                 //get actual file contents
-                var jadeContents = grunt.file.read(src);
+                var pugContents = grunt.file.read(src);
                 //parse through optimizer
-                jadeContents = jadeParser(jadeContents, extractedTargets, assign({}, options, {
+                pugContents = pugParser(pugContents, extractedTargets, assign({}, options, {
                     location: src,
                     output: file.dest
                 }));
-                //concat jade file src
-                jadeSrc += jadeContents;
+                //concat pug file src
+                pugSrc += pugContents;
             });
             //if there is a target file
             if (file.dest) {
                 //write output
-                grunt.file.write(file.dest, jadeSrc);
+                grunt.file.write(file.dest, pugSrc);
             }
         });
         return extractedTargets;
@@ -181,7 +181,7 @@ exports.task = function (grunt) {
         var dirTasks = options.dirTasks;
 
         forEach(taskKinds, function (tasks, filetype) {
-            var targetName = 'jadeUsemin-' + filetype;
+            var targetName = 'pugUsemin-' + filetype;
             forEach(tasks, function (task, index) {
                 var transformFn;
                 //build initial task config
@@ -250,7 +250,7 @@ exports.task = function (grunt) {
             oldPath = oldPath.substr(len);
             newPath = newPath.substr(len);
         }
-        //apply a fix for windows paths. see https://github.com/pgilad/grunt-jade-usemin/pull/13
+        //apply a fix for windows paths. see https://github.com/pgilad/grunt-pug-usemin/pull/13
         return params.contents.replace(slash(oldPath), slash(newPath));
     };
 
@@ -258,14 +258,14 @@ exports.task = function (grunt) {
      * rewriteRevs
      *
      * @param summary contains key values of { oldTarget: newTarget}
-     * @param filerev contains dictionary of {output: 'jade output', dest: 'oldTarget'}
+     * @param filerev contains dictionary of {output: 'pug output', dest: 'oldTarget'}
      * @param {String} [targetPrefix] A string to remove for targets
      */
     var rewriteRevs = function (summary, filerev, targetPrefix) {
         forEach(summary, function (newTarget, oldTarget) {
             forEach(filerev, function (file) {
                 //if paths aren't the same - skip
-                //apply a fix for windows paths. see https://github.com/pgilad/grunt-jade-usemin/pull/13
+                //apply a fix for windows paths. see https://github.com/pgilad/grunt-pug-usemin/pull/13
                 if (slash(file.dest) !== slash(oldTarget)) {
                     return;
                 }
@@ -284,7 +284,7 @@ exports.task = function (grunt) {
         });
     };
 
-    var jadeParser = function (jadeContents, extractedTargets, options) {
+    var pugParser = function (pugContents, extractedTargets, options) {
         var prefix = options.prefix;
         var replacePath = options.replacePath;
         var location = options.location;
@@ -298,7 +298,7 @@ exports.task = function (grunt) {
 
         var insideBuild = false;
         var tempExtraction = {};
-        var lines = jadeContents.split('\n');
+        var lines = pugContents.split('\n');
 
         forEach(lines, function (line, lineIndex) {
             //if still scanning for build:<type>
@@ -392,13 +392,13 @@ exports.task = function (grunt) {
                             return addSrcToTarget(tempExtraction, target, altPathSrc);
                         }
                     }
-                    //attempt to resolve path relative to location (where jade file is)
-                    grunt.verbose.writelns('Src file ' + src + " wasn't found. Looking for it relative to jade file");
+                    //attempt to resolve path relative to location (where pug file is)
+                    grunt.verbose.writelns('Src file ' + src + " wasn't found. Looking for it relative to pug file");
                     var newSrcPath = path.resolve(path.dirname(location), src);
                     if (grunt.file.exists(newSrcPath)) {
                         return addSrcToTarget(tempExtraction, target, newSrcPath);
                     }
-                    grunt.verbose.writelns('Src file ' + newSrcPath + " wasn't found relative to jade file as well.");
+                    grunt.verbose.writelns('Src file ' + newSrcPath + " wasn't found relative to pug file as well.");
                     var logAction = failOnMissingSource ? grunt.fatal : grunt.log.warn;
                     logAction("Found script src that doesn't exist: " + src);
                 }
@@ -413,7 +413,7 @@ exports.task = function (grunt) {
     };
 
     return {
-        jadeParser: jadeParser,
+        pugParser: pugParser,
         processTasks: processTasks,
         iterateFiles: iterateFiles,
         rewriteRevs: rewriteRevs

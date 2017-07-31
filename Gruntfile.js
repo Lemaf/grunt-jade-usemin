@@ -1,5 +1,5 @@
 /*
- * grunt-jade-usemin
+ * grunt-pug-usemin
  *
  *
  * Copyright ©2014 Gilad Peleg
@@ -17,14 +17,14 @@ module.exports = function (grunt) {
             tests: ['tmp', 'test/compiled']
         },
         filerev: {
-            jadeUsemin: {
+            pugUsemin: {
                 options: {
                     noDest: false
                 }
             }
         },
         // Configuration to be run (and then tested).
-        jadeUsemin: {
+        pugUsemin: {
             options: {
                 replacePath: {
                     '#{baseDir}': 'test' //optional - key value to replace in src path
@@ -38,19 +38,19 @@ module.exports = function (grunt) {
                     }
                 },
                 files: [{
-                    dest: 'test/compiled/basic.jade',
-                    src: 'test/fixtures/basic.jade'
+                    dest: 'test/compiled/basic.pug',
+                    src: 'test/fixtures/basic.pug'
                 }, {
-                    src: 'test/fixtures/{multiple,replacePath}.jade'
+                    src: 'test/fixtures/{multiple,replacePath}.pug'
                 }, {
-                    src: 'test/fixtures/production.jade',
-                    dest: 'test/compiled/production.jade'
+                    src: 'test/fixtures/production.pug',
+                    dest: 'test/compiled/production.pug'
                 }, {
-                      src: 'test/fixtures/linkPrefetch.jade',
-                      dest: 'test/compiled/linkPrefetch.jade'
+                      src: 'test/fixtures/linkPrefetch.pug',
+                      dest: 'test/compiled/linkPrefetch.pug'
                 }, {
-                    src: 'test/fixtures/solvePath.jade',
-                    dest: 'test/compiled/solvePath.jade'
+                    src: 'test/fixtures/solvePath.pug',
+                    dest: 'test/compiled/solvePath.pug'
                 }]
             },
             advanced: {
@@ -62,14 +62,14 @@ module.exports = function (grunt) {
                     dirTasks: ['filerev']
                 },
                 files: [{
-                    dest: 'test/compiled/autoprefixer.jade',
-                    src: 'test/fixtures/autoprefixer.jade'
+                    dest: 'test/compiled/autoprefixer.pug',
+                    src: 'test/fixtures/autoprefixer.pug'
                 }, {
-                    dest: 'test/compiled/windowsPaths.jade',
-                    src: 'test/fixtures/windowsPaths.jade'
+                    dest: 'test/compiled/windowsPaths.pug',
+                    src: 'test/fixtures/windowsPaths.pug'
                 }, {
-                    dest: 'test/compiled/filerev.jade',
-                    src: 'test/fixtures/filerev.jade'
+                    dest: 'test/compiled/filerev.pug',
+                    src: 'test/fixtures/filerev.pug'
                 }]
             },
             withPrefix: {
@@ -83,8 +83,8 @@ module.exports = function (grunt) {
                     targetPrefix: 'test/'
                 },
                 files: [{
-                    src: 'test/fixtures/layout.jade',
-                    dest: 'test/compiled/layout.jade'
+                    src: 'test/fixtures/layout.pug',
+                    dest: 'test/compiled/layout.pug'
                 }]
             },
             withPrefixTwoFiles: {
@@ -98,11 +98,11 @@ module.exports = function (grunt) {
                     targetPrefix: 'test/'
                 },
                 files: [{
-                    src: 'test/fixtures/layout-advanced.jade',
-                    dest: 'test/compiled/layout-advanced.jade'
+                    src: 'test/fixtures/layout-advanced.pug',
+                    dest: 'test/compiled/layout-advanced.pug'
                 }, {
-                    src: 'test/fixtures/layout-advanced2.jade',
-                    dest: 'test/compiled/layout-advanced2.jade'
+                    src: 'test/fixtures/layout-advanced2.pug',
+                    dest: 'test/compiled/layout-advanced2.pug'
                 }]
             },
             withPrefixNoSlash: {
@@ -116,8 +116,8 @@ module.exports = function (grunt) {
                     targetPrefix: 'test'
                 },
                 files: [{
-                    src: 'test/fixtures/withPrefixNoSlash.jade',
-                    dest: 'test/compiled/withPrefixNoSlash.jade'
+                    src: 'test/fixtures/withPrefixNoSlash.pug',
+                    dest: 'test/compiled/withPrefixNoSlash.pug'
                 }]
             },
             alternate: {
@@ -128,21 +128,21 @@ module.exports = function (grunt) {
                     }
                 },
                 files: [{
-                    src: 'test/fixtures/alternate.jade',
-                    dest: 'test/compiled/alternate.jade'
+                    src: 'test/fixtures/alternate.pug',
+                    dest: 'test/compiled/alternate.pug'
                 }, ]
             },
             empty: {
                 files: [{
-                    dest: 'test/compiled/empty.jade',
-                    src: 'test/fixtures/empty.jade'
+                    dest: 'test/compiled/empty.pug',
+                    src: 'test/fixtures/empty.pug'
                 }]
             }
         },
         copy: {
             test: {
-                src: 'test/fixtures/windowsPaths.jade',
-                dest: 'test/compiled/windowsPaths.jade'
+                src: 'test/fixtures/windowsPaths.pug',
+                dest: 'test/compiled/windowsPaths.pug'
             }
         },
         devUpdate: {
@@ -172,13 +172,13 @@ module.exports = function (grunt) {
     // plugin's task(s), then test the result.
     grunt.registerTask('test', [
         'clean',
-        'jadeUsemin:basic',
-        'jadeUsemin:advanced',
-        'jadeUsemin:withPrefix',
-        'jadeUsemin:withPrefixTwoFiles',
-        'jadeUsemin:withPrefixNoSlash',
-        'jadeUsemin:alternate',
-        'jadeUsemin:empty',
+        'pugUsemin:basic',
+        'pugUsemin:advanced',
+        'pugUsemin:withPrefix',
+        'pugUsemin:withPrefixTwoFiles',
+        'pugUsemin:withPrefixNoSlash',
+        'pugUsemin:alternate',
+        'pugUsemin:empty',
         'copy:test',
         'nodeunit'
     ]);

@@ -1,17 +1,17 @@
 # Example Usages
 
-All tasks can be run using `grunt jadeUsemin:scripts` or just `grunt jadeUsemin`.
+All tasks can be run using `grunt pugUsemin:scripts` or just `grunt pugUsemin`.
 
 ## basic javascript pattern
 
 This example shows the basic usage of this plugin:
-concatenate and uglify javascript files found in a `sample.jade` file.
+concatenate and uglify javascript files found in a `sample.pug` file.
 
-We will also be writing an output optimized jade file.
+We will also be writing an output optimized pug file.
 
-### Jade file: sample.jade
+### Pug file: sample.pug
 
-```jade
+```pug
 //-<!-- build:js public/js/scripts.min.js -->
 script(src='./src/js/script1.js')
 script(src='./src/js/script2.js')
@@ -21,7 +21,7 @@ script(src='./src/js/script2.js')
 
 ```js
 //...
-jadeUsemin: {
+pugUsemin: {
     scripts: {
         options: {
             tasks: {
@@ -29,8 +29,8 @@ jadeUsemin: {
             }
         },
         files: [{
-            dest: './src/partials/sample.jade',
-            src: './public/partials/sample.jade'
+            dest: './src/partials/sample.pug',
+            src: './public/partials/sample.pug'
         }]
     }
 }
@@ -39,11 +39,11 @@ jadeUsemin: {
 
 ## Combined CSS & JS example
 
-This example shows a usage case of a jade file containing both css files and js scripts.
+This example shows a usage case of a pug file containing both css files and js scripts.
 
-### Jade file: combined.jade
+### Pug file: combined.pug
 
-```jade
+```pug
 //-<!-- build:js public/js/scripts.min.js -->
 script(src='./src/js/script1.js')
 script(src='./src/js/script2.js')
@@ -59,7 +59,7 @@ link(rel='stylesheet', href='/test/fixtures/style2.css')
 
 ```js
 //...
-jadeUsemin: {
+pugUsemin: {
     scripts: {
         options: {
             tasks: {
@@ -68,24 +68,24 @@ jadeUsemin: {
             }
         },
         files: [{
-            dest: './src/partials/combined.jade',
-            src: './public/partials/combined.jade'
+            dest: './src/partials/combined.pug',
+            src: './public/partials/combined.pug'
         }]
     }
 }
 //...
 ```
 
-## Server side only jade
+## Server side only pug
 
 This is most effectively used in conjunction with the environment variable in express
 i.e `process.env` or `node env`.
 
-**Note:** for the following to work, you need to expose your `env` variable when rendering the jade file.
+**Note:** for the following to work, you need to expose your `env` variable when rendering the pug file.
 
-### Sample server.jade
+### Sample server.pug
 
-```jade
+```pug
 if env === 'development'
     //-<!-- build:js public/js/compiled.min.js -->
     script(src='/src/js/script1.js')
@@ -100,14 +100,14 @@ else
 And your `grunt config` can look something like this:
 ```js
 //...
-jadeUsemin: {
+pugUsemin: {
     scripts: {
         options: {
             tasks: {
                 js: ['concat', 'uglify']
             }
         },
-        files: [{src:'./app/views/server.jade'}]
+        files: [{src:'./app/views/server.pug'}]
     }
 }
 //...
@@ -117,9 +117,9 @@ jadeUsemin: {
 
 This example shows how advanced tasks can be added to the build steps. We will add autoprefixer to the css task stack and file rev to both css and js task stacks.
 
-### Sample advanced.jade
+### Sample advanced.pug
 
-```jade
+```pug
 //-<!-- build:js public/js/scripts.min.js -->
 script(src='./src/js/script1.js')
 script(src='./src/js/script2.js')
@@ -135,7 +135,7 @@ link(rel='stylesheet', href='/test/fixtures/style2.css')
 
 ```js
 //...
-jadeUsemin: {
+pugUsemin: {
     scripts: {
         options: {
             tasks: {
@@ -145,8 +145,8 @@ jadeUsemin: {
             dirTasks: ['filerev']
         },
         files: [{
-            dest: './src/partials/combined.jade',
-            src: './public/partials/combined.jade'
+            dest: './src/partials/combined.pug',
+            src: './public/partials/combined.pug'
         }]
     }
 }

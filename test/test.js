@@ -1,7 +1,7 @@
 'use strict';
 var grunt = require('grunt');
 var path = require('path');
-var lib = require('../tasks/lib/jade_usemin').task(grunt);
+var lib = require('../tasks/lib/pug_usemin').task(grunt);
 
 var fileCmp = function (test, origin, target) {
     target = target || origin;
@@ -10,11 +10,11 @@ var fileCmp = function (test, origin, target) {
     test.equal(actual.trim(), expected.trim(), 'files should be equal');
 };
 
-exports.jadeUsemin = {
+exports.pugUsemin = {
     basic: function (test) {
         test.expect(2);
         fileCmp(test, 'basic.min.js');
-        fileCmp(test, 'basic.jade');
+        fileCmp(test, 'basic.pug');
         test.done();
     },
     multiple: function (test) {
@@ -30,17 +30,17 @@ exports.jadeUsemin = {
     },
     linkPrefetch: function (test) {
         test.expect(1);
-        fileCmp(test, 'linkPrefetch.jade');
+        fileCmp(test, 'linkPrefetch.pug');
         test.done();
     },
     production: function (test) {
         test.expect(1);
-        fileCmp(test, 'production.jade');
+        fileCmp(test, 'production.pug');
         test.done();
     },
     solvePath: function (test) {
         test.expect(1);
-        fileCmp(test, 'solvePath.jade');
+        fileCmp(test, 'solvePath.pug');
         test.done();
     },
     autoprefixer: function (test) {
@@ -54,25 +54,25 @@ exports.jadeUsemin = {
         filename = path.basename(filename);
         fileCmp(test, filename, 'filerev.min.js');
 
-        var compiledJade = 'test/compiled/autoprefixer.jade';
-        var filerev = grunt.file.read(compiledJade);
+        var compiledPug = 'test/compiled/autoprefixer.pug';
+        var filerev = grunt.file.read(compiledPug);
         // script(src='test/compiled/filerev.min.da5bd415.js')
         test.ok(/test\/compiled\/filerev\.min\.(\w+)\.js/.test(filerev),
-            'Make sure ' + compiledJade + ' contains the revved asset');
+            'Make sure ' + compiledPug + ' contains the revved asset');
 
-        compiledJade = 'test/compiled/filerev.jade';
-        var filerev2 = grunt.file.read(compiledJade);
+        compiledPug = 'test/compiled/filerev.pug';
+        var filerev2 = grunt.file.read(compiledPug);
         test.ok(/test\/compiled\/filerev.min.(\w+).js/.test(filerev2),
-            'Make sure ' + compiledJade + ' contains the revved asset');
+            'Make sure ' + compiledPug + ' contains the revved asset');
 
         test.done();
     },
     withPrefix: function (test) {
         test.expect(2);
-        var compiledJade = 'test/compiled/layout.jade';
-        var layout = grunt.file.read(compiledJade);
+        var compiledPug = 'test/compiled/layout.pug';
+        var layout = grunt.file.read(compiledPug);
         test.ok(/compiled\/jquery\.min\.(\w+)\.js/.test(layout),
-            'Make sure ' + compiledJade + ' has the revved asset');
+            'Make sure ' + compiledPug + ' has the revved asset');
 
         var filename = grunt.file.expand('test/compiled/jquery.min.*.js')[0];
         filename = path.basename(filename);
@@ -83,15 +83,15 @@ exports.jadeUsemin = {
     },
     withPrefixTwoFiles: function (test) {
         test.expect(3);
-        var compiledJade = 'test/compiled/layout-advanced.jade';
-        var layout = grunt.file.read(compiledJade);
+        var compiledPug = 'test/compiled/layout-advanced.pug';
+        var layout = grunt.file.read(compiledPug);
         test.ok(/compiled\/jquery\.min\.(\w+)\.js/.test(layout),
-            'Make sure ' + compiledJade + ' contains the revved asset');
+            'Make sure ' + compiledPug + ' contains the revved asset');
 
-        compiledJade = 'test/compiled/layout-advanced2.jade';
-        var layout2 = grunt.file.read(compiledJade);
+        compiledPug = 'test/compiled/layout-advanced2.pug';
+        var layout2 = grunt.file.read(compiledPug);
         test.ok(/compiled\/jquery\.min\.(\w+)\.js/.test(layout2),
-            'Make sure ' + compiledJade + ' contains the revved asset');
+            'Make sure ' + compiledPug + ' contains the revved asset');
 
         var filename = grunt.file.expand('test/compiled/jquery.min.*.js')[0];
         filename = path.basename(filename);
@@ -101,7 +101,7 @@ exports.jadeUsemin = {
     },
     withPrefixNoSlash: function (test) {
         test.expect(2);
-        var layout = grunt.file.read('test/compiled/withPrefixNoSlash.jade');
+        var layout = grunt.file.read('test/compiled/withPrefixNoSlash.pug');
         test.ok(/compiled\/jquery\.min\.(\w+)\.js/.test(layout));
 
         var filename = grunt.file.expand('test/compiled/jquery.min.*.js')[0];
@@ -118,14 +118,14 @@ exports.jadeUsemin = {
         };
 
         var filerev = [{
-            output: 'test/compiled/windowsPaths.jade',
+            output: 'test/compiled/windowsPaths.pug',
             dest: 'test\\compiled\\basic.min.js'
         }];
 
         //rewrite with new paths
         lib.rewriteRevs(summary, filerev);
         //read the generated file
-        var file = grunt.file.read('test/compiled/windowsPaths.jade');
+        var file = grunt.file.read('test/compiled/windowsPaths.pug');
         //make sure path is re-written correctly
         test.ok(/test\/compiled\/basic\.min\.da5bd415\.js/.test(file));
 
@@ -133,7 +133,7 @@ exports.jadeUsemin = {
     },
     altPath: function (test) {
         test.expect(3);
-        fileCmp(test, 'alternate.jade');
+        fileCmp(test, 'alternate.pug');
         fileCmp(test, 'alternate.min.css');
         fileCmp(test, 'alternate.min.js');
         test.done();
