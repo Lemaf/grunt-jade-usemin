@@ -2,7 +2,7 @@
   "name": "grunt-pug-usemin",
   "version": "1.0.0",
   "description": "Grunt plugin for running usemin on Pug files",
-  "repository": "pgilad/grunt-pug-usemin",
+  "repository": "Lemaf/grunt-pug-usemin",
   "license": "MIT",
   "author": {
     "name": "Gilad Peleg",
@@ -48,6 +48,10 @@
     {
       "name": "Pavol Pitonak",
       "url": "https://github.com/ppitonak"
+    },
+    {
+      "name": "Diego Nogueira Teixeira",
+      "url": "https://github.com/teixeiradiego"
     }
   ]
 }
